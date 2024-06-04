@@ -2,8 +2,15 @@ import { useEffect, useState } from "react";
 import { getFromLocalStorage } from "../services/storeLS";
 import { BookCard } from "./BookCard";
 
-export default function MyBookshelfSection() {
+export default function MyBookshelfSection({ loadingState }) {
   const [books, setBooks] = useState([]);
+  useEffect(() => {
+    loadingState(true);
+    setTimeout(() => {
+      setBooks(getFromLocalStorage());
+      loadingState(false);
+    }, 300);
+  }, []);
   useEffect(() => {
     setBooks(getFromLocalStorage());
   }, [books]);
